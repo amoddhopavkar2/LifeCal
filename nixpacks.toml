@@ -1,2 +1,13 @@
 [phases.setup]
-aptPkgs = ["build-essential", "libcairo2-dev", "libpango1.0-dev", "libjpeg-dev", "libgif-dev", "librsvg2-dev"]
+aptPkgs = [
+  "build-essential",
+  "libcairo2-dev",
+  "libcairo2",
+  "libpango1.0-dev",
+  "libpango1.0-0",
+  "libjpeg-dev",
+  "libgif-dev",
+  "librsvg2-dev",
+  "librsvg2-2",
+  "libpng-dev"
+]
