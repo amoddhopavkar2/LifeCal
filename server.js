@@ -91,10 +91,10 @@ function generateCalendarImage(themeName) {
   ctx.fillStyle = theme.background;
   ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-  // Grid configuration - 52 weeks in a 4×13 grid (vertical layout)
+  // Grid configuration - 52 weeks in a 5×10+2 grid
   const totalWeeks = 52;
-  const weeksPerRow = 4;
-  const rows = 13;
+  const weeksPerRow = 5;
+  const rows = 11; // 10 full rows + 1 row with 2 dots
   const currentWeek = getCurrentWeekOfYear();
   const currentYear = new Date().getFullYear();
 
@@ -110,9 +110,9 @@ function generateCalendarImage(themeName) {
   const availableWidth = CANVAS_WIDTH - marginLeft - marginRight;
   const availableHeight = CANVAS_HEIGHT - headerHeight - safeAreaTop - marginBottom;
 
-  // Calculate optimal dot size and spacing (large dots for year view)
-  const dotDiameter = 50;
-  const spacing = 15;
+  // Calculate optimal dot size and spacing (1.5x larger)
+  const dotDiameter = 75;
+  const spacing = 23;
   const cellSize = dotDiameter + spacing;
 
   // Calculate grid dimensions
@@ -123,7 +123,7 @@ function generateCalendarImage(themeName) {
   const startX = marginLeft + (availableWidth - gridWidth) / 2;
   const startY = safeAreaTop + headerHeight + (availableHeight - gridHeight) / 2;
 
-  // Draw the grid of weeks (4×13 grid)
+  // Draw the grid of weeks (5×10+2 grid)
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < weeksPerRow; col++) {
       const weekIndex = row * weeksPerRow + col;
