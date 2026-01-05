@@ -91,10 +91,10 @@ function generateCalendarImage(themeName) {
   ctx.fillStyle = theme.background;
   ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-  // Grid configuration - 52 weeks in a 13×4 grid
+  // Grid configuration - 52 weeks in a 4×13 grid (vertical layout)
   const totalWeeks = 52;
-  const weeksPerRow = 13;
-  const rows = 4;
+  const weeksPerRow = 4;
+  const rows = 13;
   const currentWeek = getCurrentWeekOfYear();
   const currentYear = new Date().getFullYear();
 
@@ -123,18 +123,7 @@ function generateCalendarImage(themeName) {
   const startX = marginLeft + (availableWidth - gridWidth) / 2;
   const startY = safeAreaTop + headerHeight + (availableHeight - gridHeight) / 2;
 
-  // Draw year label at top
-  ctx.fillStyle = theme.text;
-  ctx.font = 'bold 48px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText(currentYear.toString(), CANVAS_WIDTH / 2, safeAreaTop + 80);
-
-  // Draw week count
-  ctx.font = '24px sans-serif';
-  ctx.fillStyle = theme.textSecondary;
-  ctx.fillText(`Week ${currentWeek + 1} of 52`, CANVAS_WIDTH / 2, safeAreaTop + 140);
-
-  // Draw the grid of weeks (13×4 grid)
+  // Draw the grid of weeks (4×13 grid)
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < weeksPerRow; col++) {
       const weekIndex = row * weeksPerRow + col;
@@ -161,35 +150,35 @@ function generateCalendarImage(themeName) {
     }
   }
 
-  // Draw legend at bottom
-  const legendY = CANVAS_HEIGHT - 80;
-  const legendStartX = CANVAS_WIDTH / 2 - 180;
+  // Draw legend at bottom (larger size)
+  const legendY = CANVAS_HEIGHT - 100;
+  const legendStartX = CANVAS_WIDTH / 2 - 220;
 
   // Completed dot
   ctx.beginPath();
-  ctx.arc(legendStartX, legendY, 8, 0, Math.PI * 2);
+  ctx.arc(legendStartX, legendY, 12, 0, Math.PI * 2);
   ctx.fillStyle = theme.lived;
   ctx.fill();
   ctx.fillStyle = theme.textSecondary;
-  ctx.font = '18px sans-serif';
+  ctx.font = '28px sans-serif';
   ctx.textAlign = 'left';
-  ctx.fillText('Completed', legendStartX + 20, legendY + 6);
+  ctx.fillText('Completed', legendStartX + 28, legendY + 10);
 
   // Current dot
   ctx.beginPath();
-  ctx.arc(legendStartX + 140, legendY, 8, 0, Math.PI * 2);
+  ctx.arc(legendStartX + 200, legendY, 12, 0, Math.PI * 2);
   ctx.fillStyle = theme.current;
   ctx.fill();
   ctx.fillStyle = theme.textSecondary;
-  ctx.fillText('This Week', legendStartX + 160, legendY + 6);
+  ctx.fillText('This Week', legendStartX + 228, legendY + 10);
 
   // Remaining dot
   ctx.beginPath();
-  ctx.arc(legendStartX + 290, legendY, 8, 0, Math.PI * 2);
+  ctx.arc(legendStartX + 390, legendY, 12, 0, Math.PI * 2);
   ctx.fillStyle = theme.future;
   ctx.fill();
   ctx.fillStyle = theme.textSecondary;
-  ctx.fillText('Remaining', legendStartX + 310, legendY + 6);
+  ctx.fillText('Remaining', legendStartX + 418, legendY + 10);
 
   return canvas.toBuffer('image/png');
 }
