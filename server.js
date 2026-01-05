@@ -69,17 +69,6 @@ function validateInput(body) {
     }
   }
 
-  if (!body.currentDate) {
-    errors.push('currentDate is required (format: YYYY-MM-DD)');
-  } else if (!/^\d{4}-\d{2}-\d{2}$/.test(body.currentDate)) {
-    errors.push('currentDate must be in YYYY-MM-DD format');
-  } else {
-    const date = new Date(body.currentDate);
-    if (isNaN(date.getTime())) {
-      errors.push('currentDate is not a valid date');
-    }
-  }
-
   const lifeExpectancy = body.lifeExpectancy || 80;
   if (typeof lifeExpectancy !== 'number' || lifeExpectancy < 1 || lifeExpectancy > 150) {
     errors.push('lifeExpectancy must be a number between 1 and 150');
@@ -89,12 +78,12 @@ function validateInput(body) {
     errors.push('theme must be either "dark" or "light"');
   }
 
-  // Check if birthDate is after currentDate
-  if (body.birthDate && body.currentDate) {
+  // Check if birthDate is in the future
+  if (body.birthDate) {
     const birth = new Date(body.birthDate);
-    const current = new Date(body.currentDate);
-    if (birth > current) {
-      errors.push('birthDate cannot be after currentDate');
+    const today = new Date();
+    if (birth > today) {
+      errors.push('birthDate cannot be in the future');
     }
   }
 
@@ -368,11 +357,6 @@ app.get('/', (req, res) => {
             <span class="param-desc">Your birth date (YYYY-MM-DD) <span class="required">required</span></span>
           </div>
           <div class="param">
-            <span class="param-name">currentDate</span>
-            <span class="param-type">string</span>
-            <span class="param-desc">Current date (YYYY-MM-DD) <span class="required">required</span></span>
-          </div>
-          <div class="param">
             <span class="param-name">lifeExpectancy</span>
             <span class="param-type">number</span>
             <span class="param-desc">Expected lifespan in years (default: 80)</span>
@@ -386,7 +370,7 @@ app.get('/', (req, res) => {
 
         <pre><code>curl -X POST ${req.protocol}://${req.get('host')}/api/generate-calendar \\
   -H "Content-Type: application/json" \\
-  -d '{"birthDate":"1990-05-15","currentDate":"2024-01-15","lifeExpectancy":80}' \\
+  -d '{"birthDate":"1990-05-15","lifeExpectancy":80,"theme":"dark"}' \\
   --output calendar.png</code></pre>
       </div>
 
@@ -420,10 +404,13 @@ app.post('/api/generate-calendar', (req, res) => {
 
     const {
       birthDate,
-      currentDate,
       lifeExpectancy = 80,
       theme = 'dark',
     } = req.body;
+
+    // Use current date automatically
+    const today = new Date();
+    const currentDate = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
 
     // Generate the image
     const imageBuffer = generateCalendarImage(birthDate, currentDate, lifeExpectancy, theme);
