@@ -149,13 +149,13 @@ function generateCalendarImage(birthDate, currentDate, lifeExpectancy, themeName
 
   // Draw header labels
   ctx.fillStyle = theme.textSecondary;
-  ctx.font = '10px Arial';
+  ctx.font = '10px sans-serif';
   ctx.textAlign = 'center';
 
   // "LIFE CALENDAR" label at top right
   ctx.save();
   ctx.fillStyle = theme.text;
-  ctx.font = '12px Arial';
+  ctx.font = '12px sans-serif';
   ctx.textAlign = 'right';
   ctx.fillText('LIFE CALENDAR', CANVAS_WIDTH - 50, safeAreaTop + 30);
   ctx.restore();
@@ -163,7 +163,7 @@ function generateCalendarImage(birthDate, currentDate, lifeExpectancy, themeName
   // "WEEK OF THE YEAR" vertical label on left side
   ctx.save();
   ctx.fillStyle = theme.textSecondary;
-  ctx.font = '10px Arial';
+  ctx.font = '10px sans-serif';
   ctx.translate(30, safeAreaTop + headerHeight + gridHeight / 2);
   ctx.rotate(-Math.PI / 2);
   ctx.textAlign = 'center';
@@ -172,7 +172,7 @@ function generateCalendarImage(birthDate, currentDate, lifeExpectancy, themeName
 
   // Week numbers along top (every 10 weeks)
   ctx.fillStyle = theme.textSecondary;
-  ctx.font = '8px Arial';
+  ctx.font = '8px sans-serif';
   ctx.textAlign = 'center';
   for (let w = 0; w <= weeksPerYear; w += 10) {
     const x = startX + w * cellSize;
@@ -189,12 +189,12 @@ function generateCalendarImage(birthDate, currentDate, lifeExpectancy, themeName
   // Draw age label
   const ageYears = Math.floor(weeksLived / 52);
   ctx.fillStyle = theme.text;
-  ctx.font = 'bold 14px Arial';
+  ctx.font = 'bold 14px sans-serif';
   ctx.textAlign = 'left';
   ctx.fillText(`Age: ${ageYears} years`, marginLeft + yearLabelWidth, safeAreaTop + 60);
 
   // Draw weeks lived counter
-  ctx.font = '12px Arial';
+  ctx.font = '12px sans-serif';
   ctx.fillStyle = theme.textSecondary;
   ctx.fillText(`${weeksLived.toLocaleString()} weeks lived`, marginLeft + yearLabelWidth, safeAreaTop + 85);
   ctx.fillText(`${(totalWeeks - weeksLived).toLocaleString()} weeks remaining`, marginLeft + yearLabelWidth, safeAreaTop + 105);
@@ -227,7 +227,7 @@ function generateCalendarImage(birthDate, currentDate, lifeExpectancy, themeName
   // Draw birth year indicator
   const birthYear = new Date(birthDate).getFullYear();
   ctx.fillStyle = theme.textSecondary;
-  ctx.font = '10px Arial';
+  ctx.font = '10px sans-serif';
   ctx.textAlign = 'left';
   ctx.fillText(`Born: ${birthYear}`, marginLeft + yearLabelWidth, safeAreaTop + 130);
 
@@ -241,7 +241,7 @@ function generateCalendarImage(birthDate, currentDate, lifeExpectancy, themeName
   ctx.fillStyle = theme.lived;
   ctx.fill();
   ctx.fillStyle = theme.textSecondary;
-  ctx.font = '10px Arial';
+  ctx.font = '10px sans-serif';
   ctx.textAlign = 'left';
   ctx.fillText('Lived', legendStartX + 12, legendY + 4);
 

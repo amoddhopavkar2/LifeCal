@@ -16,6 +16,9 @@ RUN apt-get update && apt-get install -y \
     librsvg2-2 \
     libpixman-1-dev \
     libpng-dev \
+    fontconfig \
+    fonts-liberation \
+    fonts-dejavu-core \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
