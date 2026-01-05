@@ -134,9 +134,9 @@ function generateCalendarImage(birthDate, currentDate, lifeExpectancy, themeName
   const availableWidth = CANVAS_WIDTH - marginLeft - marginRight - yearLabelWidth;
   const availableHeight = CANVAS_HEIGHT - headerHeight - safeAreaTop - marginBottom;
 
-  // Calculate optimal dot size and spacing (increased by 1.25x)
-  const dotDiameter = 10;
-  const spacing = 4;
+  // Calculate optimal dot size and spacing (increased for better visibility)
+  const dotDiameter = 13;
+  const spacing = 5;
   const cellSize = dotDiameter + spacing;
 
   // Calculate grid dimensions
@@ -186,19 +186,6 @@ function generateCalendarImage(birthDate, currentDate, lifeExpectancy, themeName
     ctx.fillText(y.toString(), startX - 15, yPos + 3);
   }
 
-  // Draw age label
-  const ageYears = Math.floor(weeksLived / 52);
-  ctx.fillStyle = theme.text;
-  ctx.font = 'bold 14px sans-serif';
-  ctx.textAlign = 'left';
-  ctx.fillText(`Age: ${ageYears} years`, marginLeft + yearLabelWidth, safeAreaTop + 60);
-
-  // Draw weeks lived counter
-  ctx.font = '12px sans-serif';
-  ctx.fillStyle = theme.textSecondary;
-  ctx.fillText(`${weeksLived.toLocaleString()} weeks lived`, marginLeft + yearLabelWidth, safeAreaTop + 85);
-  ctx.fillText(`${(totalWeeks - weeksLived).toLocaleString()} weeks remaining`, marginLeft + yearLabelWidth, safeAreaTop + 105);
-
   // Draw the grid of weeks
   for (let year = 0; year < totalYears; year++) {
     for (let week = 0; week < weeksPerYear; week++) {
@@ -223,13 +210,6 @@ function generateCalendarImage(birthDate, currentDate, lifeExpectancy, themeName
       ctx.fill();
     }
   }
-
-  // Draw birth year indicator
-  const birthYear = new Date(birthDate).getFullYear();
-  ctx.fillStyle = theme.textSecondary;
-  ctx.font = '10px sans-serif';
-  ctx.textAlign = 'left';
-  ctx.fillText(`Born: ${birthYear}`, marginLeft + yearLabelWidth, safeAreaTop + 130);
 
   // Draw legend at bottom
   const legendY = CANVAS_HEIGHT - 60;
